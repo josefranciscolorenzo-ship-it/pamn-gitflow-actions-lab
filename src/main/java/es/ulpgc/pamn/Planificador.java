@@ -15,7 +15,7 @@ public final class Planificador {
     }
 
     public int contar() {
-        return 0;
+        return tareas.size();
     }
 
     public List<String> listar() {
