@@ -527,6 +527,124 @@ Con Gradle Wrapper, las tareas podrían ser:
 
 ---
 
+## Ejemplo real para la clase
+
+[Abrir el repositorio del laboratorio](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab)
+
+`josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab`
+
+- `main`: aplicación base con siete pruebas.
+- `develop`: integración de la siguiente versión.
+- `feature/contar-tareas`: contador con dos pruebas adicionales.
+- `docs/`: guía, presentación y acuerdo de ramas.
+
+**Acceso:** el repositorio es privado. Proyectarlo con la cuenta del docente o utilizar cuentas con acceso autorizado.
+
+<!-- Notas: Abrir el enlace antes de la clase y comprobar la sesión. La privacidad del repositorio no cambia por incluir enlaces en el PDF. No pedir credenciales al alumnado. No hay releases ni hotfixes preparados en este ejemplo: esas partes son la continuación propuesta de la práctica. Fuente: repositorio creado para esta actividad. -->
+
+---
+
+## Recorrido de explicación en clase
+
+**Demostración propuesta: unos 15 minutos.**
+
+1. Mostrar el README y las ramas del repositorio.
+2. Abrir la PR y comprobar su destino y el diff.
+3. Leer el fallo guardado en Actions.
+4. Compararlo con la corrección y las nueve pruebas correctas.
+5. Repetir la ejecución y debatir cuándo integrar.
+
+**Pregunta al grupo:** ¿qué comprueba CI y qué deben revisar ustedes?
+
+<!-- Notas: Distribución orientativa: 3 minutos para repositorio y ramas, 3 para la PR, 3 para el fallo, 3 para la corrección y 3 para repetir y discutir. Abrir las pestañas antes de comenzar para evitar esperas. Las ejecuciones archivadas permiten explicar las fases sin modificar de nuevo el código. -->
+
+---
+
+## Paso 1: aplicación y ramas
+
+[Código de main](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/tree/main) y [rama develop](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/tree/develop)
+
+En **Code**, copiar la URL HTTPS y sustituir `URL-COPIADA`:
+
+```sh
+git clone URL-COPIADA
+cd pamn-gitflow-actions-lab
+git switch main
+mvn -B -ntp verify
+```
+
+**Explicar:** `main` contiene la base funcional. El contador pertenece a la feature que se revisará después.
+
+<!-- Notas: La clonación del repositorio privado requiere autenticación y acceso. Si ya existe una copia local, abrirla y comprobar git status antes de cambiar de rama. Mostrar pom.xml, Planificador.java y PlanificadorTest.java. Resultado de la base: siete pruebas correctas. La ejecución verificada está en https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/actions/runs/40680556380 -->
+
+---
+
+## Paso 2: revisión de la pull request
+
+[Abrir la PR número 1](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/pull/1) y [los archivos modificados](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/pull/1/changes)
+
+- **Base:** `develop`, que recibe la funcionalidad.
+- **Compare:** `feature/contar-tareas`, que aporta el cambio.
+- El diff añade `contar()` y dos pruebas.
+- Los commits conservan la implementación incorrecta y su corrección.
+
+**Pregunta:** ¿por qué esta feature se propone hacia `develop`?
+
+<!-- Notas: En Conversation, presentar la descripción y los enlaces a las ejecuciones. En Files changed, mostrar el diff final. En Commits, comparar la fase roja con el commit 330ac57. La PR se dejó abierta para la demostración. Si ya se integró, el historial y las ejecuciones siguen sirviendo para explicar el proceso. -->
+
+---
+
+## Paso 3: fallo controlado en Actions
+
+[Abrir la ejecución fallida](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/actions/runs/40680563355)
+
+Abrir `verificar-java` y el paso **Compilar y ejecutar pruebas**.
+
+```text
+cuentaLasTareasAgregadas
+expected: <2> but was: <0>
+Tests run: 9, Failures: 1
+```
+
+**Explicar:** la prueba agrega dos tareas, pero el método devuelve siempre cero. El fallo corresponde a la versión `6377d4e`.
+
+<!-- Notas: El error es deliberado y está confirmado en los logs de GitHub. Pedir al alumnado que localice el nombre de la prueba y distinga el valor esperado del obtenido. Se ejecutó manualmente sobre esa versión para conservar un caso reproducible de la fase roja. No cambiar la prueba para ocultar el defecto. -->
+
+---
+
+## Paso 4: corrección y resultado
+
+[Ver el commit de corrección](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/commit/330ac57401bf36f5c7302580122f654a04fa3483) y [la ejecución correcta](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/actions/runs/40680773140)
+
+```java
+public int contar() {
+    return tareas.size();
+}
+```
+
+**Resultado verificado:** nueve pruebas, cero fallos y `BUILD SUCCESS`.
+
+**Pregunta:** ¿qué posibles errores seguirían sin detectar estas pruebas?
+
+<!-- Notas: Mostrar que el cambio modifica la implementación y mantiene las pruebas. La fase verde corresponde a 330ac57 y también se lanzó manualmente. Evitar afirmar que un resultado verde garantiza toda la calidad o valida el destino de la PR. Comparar las mismas pruebas entre ambas ejecuciones. -->
+
+---
+
+## Paso 5: repetir y decidir la integración
+
+[Abrir Actions](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/actions) y volver a la [PR de la feature](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab/pull/1)
+
+1. En Actions, seleccionar **CI Java** y **Run workflow**.
+2. Elegir `feature/contar-tareas` y ejecutar su versión actual.
+3. Comprobar rama, commit y resultado de las pruebas.
+4. Volver a la PR, revisar y explicar **Create a merge commit**.
+
+Las fases roja y verde guardadas se lanzaron manualmente. Para mostrar el fallo anterior, usar su enlace. Una nueva ejecución usa el código corregido.
+
+<!-- Notas: workflow_dispatch permite repetir la ejecución sin editar archivos. Las dos ejecuciones comparadas se iniciaron manualmente; el YAML también configura push y pull_request. Abrir la ejecución en Actions si la pestaña Checks de la PR no la muestra. No presentar esta prueba como verificación de los disparadores automáticos. Hacer el merge en clase solo si se desea cerrar la demostración; después actualizar develop. Release y hotfix quedan como continuación. -->
+
+---
+
 ## Evidencias para discutir en clase
 
 - Acuerdo de ramas y comparación con otra estrategia.
@@ -550,5 +668,7 @@ Con Gradle Wrapper, las tareas podrían ser:
 - [actions/checkout](https://github.com/actions/checkout) y [actions/setup-java](https://github.com/actions/setup-java)
 
 Guía ampliada y aplicación: materiales entregados junto a esta presentación.
+
+[Repositorio y demostración de clase](https://github.com/josefranciscolorenzo-ship-it/pamn-gitflow-actions-lab)
 
 <!-- Notas: Fuentes consultadas el 28/10/2026 para preparar la guía. Versiones mayores de acciones por legibilidad. En un proyecto real, fijar SHA completos revisados y planificar actualizaciones. No cambiar a pull_request_target para ejecutar código de PR no confiables con permisos elevados. -->
