@@ -14,6 +14,10 @@ public final class Planificador {
         tareas.add(titulo.strip());
     }
 
+    public int contar() {
+        return tareas.size();
+    }
+
     public List<String> listar() {
         return List.copyOf(tareas);
     }

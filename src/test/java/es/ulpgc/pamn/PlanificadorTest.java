@@ -4,6 +4,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlanificadorTest {
+    @Test void cuentaCeroAlComenzar() {
+        assertEquals(0, new Planificador().contar());
+    }
+    @Test void cuentaLasTareasAgregadas() {
+        var app = new Planificador();
+        app.agregar("Estudiar GitFlow");
+        app.agregar("Revisar PR");
+        assertEquals(2, app.contar());
+    }
     @Test void empiezaVacio() {
         assertTrue(new Planificador().listar().isEmpty());
     }
