@@ -330,7 +330,7 @@ El workflow completo está en el proyecto de ejemplo.
 
 ---
 
-## Eventos que observaréis en Actions
+## Eventos que observarán en Actions
 
 | Acción | Resultado esperado |
 | --- | --- |
@@ -518,7 +518,7 @@ Con Gradle Wrapper, las tareas podrían ser:
 ./gradlew testDebugUnitTest lintDebug assembleDebug
 ```
 
-- Comprobar las tareas de vuestros módulos y variantes.
+- Comprobar las tareas de sus módulos y variantes.
 - Elegir un JDK compatible con Gradle y Android Gradle Plugin.
 - Preparar el SDK y distinguir pruebas unitarias e instrumentadas.
 - Mantener claves de firma y tokens fuera del historial.
@@ -535,7 +535,7 @@ Con Gradle Wrapper, las tareas podrían ser:
 - Release etiquetada y cambios propagados a `develop`.
 - Hotfix con prueba de regresión e integraciones completas.
 
-**Pregunta final:** ¿qué simplificaríais para vuestro proyecto y por qué?
+**Pregunta final:** ¿qué simplificarían ustedes en su proyecto y por qué?
 
 <!-- Notas: Propuesta de autoevaluación, sin carácter de rúbrica oficial. Preguntar también a qué rama afecta pull_request.branches y por qué CI no valida todo el acuerdo de colaboración. -->
 
